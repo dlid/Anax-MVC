@@ -40,7 +40,7 @@ gånger, men de har aldrig riktigt landat.
 jag inte påstå att jag har någon djupare förståelse för dem, så jag ser fram
 emot att lära mig mer!
 
-* Din uppfattning om Anax, och speciellt Anax-MVC?
+> Din uppfattning om Anax, och speciellt Anax-MVC?
 
 Som sagt, något förvirrande till en början. Det är många filer och många
 moduler i ramverket. Jag blev först lite fundersam över att det allra första steget
@@ -53,3 +53,6 @@ tror att jag kommer att ha rätt mycket att göra utan att skriva allt från gru
 Från tidigare kurser har Anax kännts som en väldigt smidig mall att använda
 för att snabbt få upp en sida, och vad jag sett hittills av Anax-MVC så är det
 en väldigt spännande förbättring.
+
+Jag lade även upp Anax-MVC på min Github med ambitionen att hålla den uppdaterad
+under kursens gång.
