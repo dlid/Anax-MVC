@@ -10,6 +10,12 @@ class CommentsInSession implements \Anax\DI\IInjectionAware
 {
     use \Anax\DI\TInjectable;
 
+    private $lastValidatedComment = null;
+
+    public function getAutoSavedFields() {
+        return $this->session->get('commentSavedFields', []);
+    }
+
     /**
      * Validate a new comment.
      *
@@ -27,8 +33,8 @@ class CommentsInSession implements \Anax\DI\IInjectionAware
         $comment['name'] || $errors[] = 'Du skrev inte ditt namn eller ett alias';
 
         if (!empty($errors)) {
-            $this->session->set('last_comment', $comment);
             $this->session->set('invalid_comment_errors', $errors);
+            $this->session->set('last_comment', $comment);
             return false;
         }
         return true;
@@ -58,6 +64,12 @@ class CommentsInSession implements \Anax\DI\IInjectionAware
         if (!isset($comments[$comment['pageIdentifier']])) {
             $comments[$comment['pageIdentifier']] = [];
         }
+
+
+        $this->session->set('commentSavedFields', [
+            'mail' => $comment['mail'],
+            'name' => $comment['name']
+        ]);
 
         $this->session->set('last_comment', array_merge($comment, [ 'content' => null]));
 
@@ -103,6 +115,28 @@ class CommentsInSession implements \Anax\DI\IInjectionAware
         return null;
     }
 
+
+    /**
+     * Find and return all comments.
+     *
+     * @return array with all comments.
+     */
+    public function updateComment($pageIdentifier, $commentId, $updatedFields)
+    {
+        $all = $this->session->get('comments', []);
+
+        if(isset($all[$pageIdentifier]) && isset($all[$pageIdentifier])) {
+            foreach( $all[$pageIdentifier] as $index => $comment ) {
+                if( $comment['id'] == $commentId) {
+                    $all[$pageIdentifier][$index] = array_merge($comment, $updatedFields);
+                    $this->session->set('comments', $all);
+                    $this->session->set('last_comment', []);
+                    return;
+                }
+            }
+        }
+    }
+
     /**
      * Delete a single comment
      *
@@ -142,11 +176,16 @@ class CommentsInSession implements \Anax\DI\IInjectionAware
      */
     public function getValidatedComment()
     {
-        $c = $this->session->get('last_comment', []);
-        if( !$c ) {
+        if($this->lastValidatedComment) {
+            return $this->lastValidatedComment;
+        }
+
+        $this->lastValidatedComment = $this->session->get('last_comment', []);
+        if( !$this->lastValidatedComment ) {
             return [];
         } 
-        return $c;
+
+        return $this->lastValidatedComment;
     }
 
     /**

@@ -61,6 +61,16 @@ Jag samlade lite funktionalitet i en ny klass som jag kallade [PageComments](sou
 När man lagt in den klassen och CommentController så är det lätt att lägga in all kommentarfunktionalitet
 med funktionen [addToPage](http://localhost:2014/phpmvc/kmom02/webroot/source?path=webroot/index.php#L48).
 
+Lade även in extrafunktionerna med att den större delen av kommentar-formuläret visas
+när textarean får fokus. Om man tömmer textfältet och textarean inte har fokus 
+så döljs det igen.
+
+Även gravatarfunktionaliteten är inlagd, både med PHP och JavaScript så att den
+uppdateras automatiskt när man skriver in en e-postadress och fältet förlorar fokus.
+
+Jämfört med Icke-MVC-Anax så tycker jag redan att den här versionen känns bättre
+att jobba med. Strukturen känns tydligare i och med att man alltid har DI i grunden
+där man kommer åt allt man kan behöva.
 
 -----
 

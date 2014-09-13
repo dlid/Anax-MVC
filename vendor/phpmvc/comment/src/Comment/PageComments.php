@@ -70,7 +70,7 @@ class PageComments implements \Anax\DI\IInjectionAware
             'name'      => null,
             'content'   => null,
             'output'    => null,
-        ], $comments->getValidatedComment());
+        ], $comments->getValidatedComment(), $comments->getAutoSavedFields(), ['id' => null]);
 
         $m['pageIdentifier'] = $this->getPageIdentifier();
 

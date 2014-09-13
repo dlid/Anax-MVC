@@ -40,8 +40,6 @@ class CommentController implements \Anax\DI\IInjectionAware
      */
     public function editAction($pageIdentifier, $postId)
     {
-
-
         $comments = new \Phpmvc\Comment\CommentsInSession();
         $comments->setDI($this->di);
 
@@ -56,6 +54,51 @@ class CommentController implements \Anax\DI\IInjectionAware
            $this->views->add('error/404');
         }
 
+    }
+
+    /**
+     * Edit a comment.
+     *
+     * @return void
+     */
+    public function saveAction()
+    {
+        $comments = new \Phpmvc\Comment\CommentsInSession();
+        $comments->setDI($this->di);
+
+
+        $isPosted = $this->request->getPost('doEdit');
+
+            
+            if($isPosted) {
+                
+                $pageIdentifier = $this->request->getPost('digest');
+                $postId = $this->request->getPost('id');
+
+                $tmpComment = $comments->findComment($pageIdentifier, $postId);
+
+                $comment = [
+                    'content'        => $this->request->getPost('content'),
+                    'name'           => $this->request->getPost('name'),
+                    'web'            => $this->request->getPost('web'),
+                    'mail'           => $this->request->getPost('mail'),
+                    'updated'        => time()
+                ];
+                
+
+                $comment = array_merge($tmpComment, $comment);
+
+                if( $comments->validate($comment) ) {
+                    $comments->updateComment($pageIdentifier, $postId, $comment);
+                    $this->response->redirect($this->request->getPost('redirect'));
+                } else {
+                    $this->theme->setTitle('Ett fel uppstod');
+                    $this->views->add('comment/invalid', [
+                        'validationErrors' => $comments->getValidationErrors(),
+                    ]);
+                }
+            }
+        
     }
 
 

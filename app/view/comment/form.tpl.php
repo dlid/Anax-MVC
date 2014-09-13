@@ -1,15 +1,17 @@
 <div class='comment-form'>
 
     <form method=post>
+        <?php if( isset($id)): ?>
+            <h2>Redigera kommentar</h2>
+            <input type="hidden" name="id" value="<?=$id?>" />
+            <input type=hidden name="redirect" value="<?=$_SERVER['HTTP_REFERER']?>">
+        <?php else: ?>
+            <h2>Kommentera '<?= htmlentities($title, null, 'utf-8'); ?>'</h2>
+            <input type=hidden name="redirect" value="<?=$this->request->getCurrentUrl()?>#comments">
+        <?php endif; ?>
 
-        <h2>Kommentera '<?= htmlentities($title, null, 'utf-8'); ?>'</h2>
-
-        <input type=hidden name="redirect" value="<?=$this->request->getCurrentUrl()?>#comments">
         <?php if( $pageIdentifier ): ?>
         <input type="hidden" name="digest" value="<?=$pageIdentifier?>" />
-        <?php endif; ?>
-        <?php if( isset($id) ): ?>
-        <input type="hidden" name="id" value="<?=$id?>" />
         <?php endif; ?>
 
         <p class="textarea">
@@ -26,9 +28,14 @@
             
             <p><label>Hemsida: </label><input placeholder="Skriv adressen till din hemsida här" type='text' name='web' value='<?=$web?>'/></p>
             <p class=buttons>
+                <?php if( isset($id)): ?>
+                <input type='submit' name='doEdit' value='Update' onClick="this.form.action = '<?=$this->url->create('comment/save')?>'"/>
+                <a href="javascript:history.go(-1)">Cancel</a>
+                <?php else: ?>
                 <input type='submit' name='doCreate' value='Comment' onClick="this.form.action = '<?=$this->url->create('comment/add')?>'"/>
                 <input type='reset' value='Reset'/>
                 <input type='submit' name='doRemoveAll' value='Remove all' onClick="this.form.action = '<?=$this->url->create('comment/remove-all')?>'"/>
+                <?php endif; ?>
             </p>
         </div>
         <output><?=$output?></output>
