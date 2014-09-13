@@ -73,7 +73,7 @@ return [
         'modernizr' => 'js/modernizr.js',
 
         // Path to jquery or null to disable
-        'jquery' => '//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js',
+        'jquery' => 'js/jquery-1.11.1.min.js',
 
         // Array with javscript-files to include
         'javascript_include' => [],

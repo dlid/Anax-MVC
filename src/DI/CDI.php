@@ -187,6 +187,11 @@ class CDI implements IDI
         } elseif (is_string($sol)) {
             // Load by creating a new object from class-string
             $this->active[$service] = new $sol();
+
+            // Automatically set the DI if it's IInjectionAware
+            if( is_a( $this->active[$service], '\\Anax\\DI\\IInjectionAware')) {
+                $this->active[$service]->setDI($this);
+            }
         } else {
             throw new Exception("The service could not be loaded.");
         }

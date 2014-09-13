@@ -7,7 +7,11 @@ $app->navbar->configure(ANAX_APP_PATH . 'config/navbar_me.php');
  
 $app->url->setUrlType(\Anax\Url\CUrl::URL_CLEAN);
 
-$app->router->add('', function() use ($app) {
+// Include support for comments
+$di->set('CommentController', 'Phpmvc\Comment\CommentController');
+$di->setShared('comments', 'Phpmvc\Comment\PageComments');
+
+$app->router->add('', function() use ($app, $di) {
   $app->theme->setTitle("Me");
  
 	$content = $app->fileContent->get('me.md');
@@ -20,9 +24,13 @@ $app->router->add('', function() use ($app) {
 	    'content' => $content,
 	    'byline' => $byline,
 	]);
+
+	// Add comments section
+  $di->comments->addToPage($app);
+
 });
 
-$app->router->add('report', function() use ($app) {
+$app->router->add('report', function() use ($app, $di) {
   $app->theme->setTitle("Redovisning");
  
 	$content = $app->fileContent->get('redovisning.md');
@@ -36,23 +44,42 @@ $app->router->add('report', function() use ($app) {
 	    'byline' => $byline,
 	]);
 
+	// Add comments section
+  $di->comments->addToPage($app);
+
+
+
 });
  
-$app->router->add('source', function() use ($app) {
+$app->router->add('source', function() use ($app, $di) {
  
     $app->theme->addStylesheet('css/source.css');
-    $app->theme->setTitle("Redovisning");
+    $app->theme->setTitle("Källkod");
  
+	 	$di->comments->includeParams(['path']);
+    
     $source = new \Mos\Source\CSource([
         'secure_dir' => '..', 
         'base_dir' => '..', 
         'add_ignore' => ['.htaccess'],
     ]);
+
+    if( $source->getRealPath() ) {
+    	$app->theme->setTitle("Källkod för " . basename($source->getRealPath()) );
+    }
+
  
     $app->views->add('me/source', [
         'content' => $source->View(),
     ]);
- 
+
+    // Add comments section, also add the 
+    // current file/folder being shown. That way
+    // there will be different comment flows per
+    // file
+  	$di->comments->addToPage($app);
+
+
 });
  
 $app->router->handle();

@@ -16,4 +16,12 @@
 }
 */
 
-
+/**
+ * Get the age of a timestamp in words
+ * @param  int  $timestamp [description]
+ * @return string The difference in words
+ */
+function get_time_ago($timestamp) {
+	$timeAgo = new TimeAgo();
+	return $timeAgo->inWords(date('Y-m-d H:i', $timestamp));
+}

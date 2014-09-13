@@ -1,6 +1,78 @@
 Redovisning
 ====================================
  
+
+Kmom02: Kontroller och modeller
+------------------------------------
+
+> Hur känns det att jobba med Composer?
+
+Jag var på ett seminarium för en tid sedan där jag fick se hur man jobbar med
+[yo](https://www.npmjs.org/package/yo), 
+[bower](http://bower.io/) och 
+[grunt](http://gruntjs.com/) och blev rätt imponerad. Själv är jag ingrodd
+Windowsanvändare med Linuxwannabe - och jag har en tröskel att komma över när
+det gäller terminalen och alla utsökta möjligheter som verkar finnas där.
+
+När jag fått igång composer på min lokala miljö så fick jag lite flashback på
+seminariet och tyckte det var rätt kul att få det att fungera i Windows på det
+sättet. För att testa på studentservern fick jag dock [gå tillbaka lite](http://dbwebb.se/kunskap/att-koppla-upp-dig-mot-en-server-med-ssh-via-terminalen)
+för att kolla hur jag kopplade upp mig med putty, men efter det var det inga 
+problem.
+
+-----
+
+> Vad tror du om de paket som finns i Packagist, är det något du kan tänka dig att använda och hittade du något spännande att inkludera i ditt ramverk?
+
+Min första tanke var att det är ju fantastiskt smidigt! Åter igen så föll tankarna
+tillbaka på seminariet där han med några kommandon kunde ladda ned en mängd paket
+och alla dess dependencies. Jag kan helt klart se nyttan i att lägga upp och
+hantera paket på detta sätt - och att via composer enkelt kunna hålla referenserna
+uppdaterade är ju också väldigt smidigt!
+
+Jag är dock inte van att sitta med kommandopromoten öppen och jobba så pass aktivt
+med den hela tiden, men det är något jag gärna skulle vilja vänja mig vid.
+
+Jag hittade en mängd paket för LESS och minifiering av CSS, JavaScript och HTML som
+jag tyckte så intressanta ut. Sedan fanns det ju paket för t.ex. fotoalbum, 
+porfolios och sökning m.m. Ett riktigt smörgåsbord som jag måste kika i nästa
+gång jag ska bygga något.
+
+-----
+
+> Hur var begreppen att förstå med klasser som kontroller som tjänster som dispatchas, fick du ihop allt? 
+
+Det begrepp som jag inte riktigt hade hört tidigare var "dispatchern". Men jag tycker
+att begreppen sitter rätt bra nu, och i instruktionerna så läste jag meningen som
+sammanfattade allt på ett väldigt bra sätt:
+
+>"En frontcontroller som tar emot requesten och dispatchar till controllern
+>som använder sig av modellen för att hämta och uppdatera informationen och därefter
+>används vyn för att rendera resultatet till en HTML-sida.""
+
+Att sitta och vidareutveckla kommentarfunktionen ledde ju till att jag fick
+skapa nya vyer, utöka CommentController, skapa en ny klass som laddas in i
+DI, få undersöka vilka funktioner som finns för t.ex. session, request och response.
+
+Även om jag förstod begreppen innan så var det nyttigt att lösa olika utmaningar med
+hjälp av ramverket för att få en bättre förståelse. 
+
+Jag samlade lite funktionalitet i en ny klass som jag kallade [PageComments](source?path=vendor/phpmvc/comment/src/Comment/PageComments.php).
+När man lagt in den klassen och CommentController så är det lätt att lägga in all kommentarfunktionalitet
+med funktionen [addToPage](http://localhost:2014/phpmvc/kmom02/webroot/source?path=webroot/index.php#L48).
+
+
+-----
+
+> Hittade du svagheter i koden som följde med phpmvc/comment? Kunde du förbättra något?
+
+Jag lade in lite validering så att man måste fylla i åtminstone kommentar och namn.
+
+
+
+Jag fixade även en liten bugg där [CSession::get](source?path=src/Session/CSession.php#L68)
+returnerade null istället för det defaultvärde man kan skicka in som parameter.
+
 Kmom01: PHP-baserade och MVC-inspirerade ramverk
 ------------------------------------
 

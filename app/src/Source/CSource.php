@@ -238,6 +238,9 @@ class CSource {
     $this->content = preg_replace($pattern, $replace, $this->content);
   }
 
+  public function GetRealPath() {
+    return $this->realPath;
+  }
 
 
   /**
