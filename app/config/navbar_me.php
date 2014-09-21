@@ -13,6 +13,7 @@ return [
 
         // This is a menu item
         'home'  => [
+            'icon' => 'home',
             'text'  => 'Me',   
             'url'   => '',  
             'title' => 'Some title 1'
@@ -20,13 +21,47 @@ return [
  
         // This is a menu item
         'report'  => [
+            'icon' => 'bar-chart',
             'text'  => 'Redovisning',   
             'url'   => 'report',   
             'title' => 'Redovisning'
         ],
+
+        // This is a menu item
+        'theme'  => [
+            'icon' => 'paint-brush',
+            'text'  => 'Tema',   
+            'url'   => 'theme',   
+            'title' => 'Tema',
+
+            // Here we add the submenu, with some menu items, as part of a existing menu item
+            'submenu' => [
+
+                'items' => [
+
+                    // This is a menu item of the submenu
+                    'type'  => [
+                        'icon' => 'text-height',
+                        'text'  => 'Typografi',   
+                        'url'   => 'theme/type',  
+                        'title' => 'Test av Lydias typografi'
+                    ],
+
+                    // This is a menu item of the submenu
+                    'regions'  => [
+                        'icon' => 'bars',
+                        'text'  => 'Alla regioner',   
+                        'url'   => 'theme/regions',  
+                        'title' => 'Se alla temats regioner'
+                    ]
+
+                ],
+            ],
+        ],
  
         // This is a menu item
         'source' => [
+            'icon' => 'code',
             'text'  =>'Källkod', 
             'url'   =>'source',  
             'title' => 'Källkod'

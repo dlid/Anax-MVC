@@ -49,7 +49,11 @@ History
 
 The minor version represents the kmom version for the course: v1.(kmom)01.1
 
-v1.2.2 (latest)
+v1.3.1 (latest)
+
+* Updated layout for kmom03
+
+v1.2.2
 
 * Updated this readme that I forgot in v1.2.1
 
@@ -57,7 +61,7 @@ v1.2.1
 
 * Included the comment functionality for kmom02
 
-v1.1.2 (latest)
+v1.1.2
 
 * Fixed readme and updated content texts
 

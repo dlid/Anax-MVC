@@ -11,7 +11,7 @@
 				<div>
 					<a href="<?= $this->url->create('comment/edit/' . $this->di->comments->getPageIdentifier() . '/' . $comment['id']) ?>" class="id">#<?=$index?></a>
 					<span class="author"><?=htmlentities($comment['name'], null, 'utf-8')?></span>
-					<time datetime="<?= date("Y-m-d H:i", $comment['timestamp']); ?>">- <?= get_time_ago($comment['timestamp']) ?></time>
+					<time datetime="<?= date("Y-m-d H:i", $comment['timestamp']); ?>">- <?= $this->comments->getTimeAgo($comment['timestamp']) ?></time>
 					<?php if( $comment['web'] ): ?>
 							<a href="<?=$comment['web']?>" class="web"><?=$comment['web']?></a>
 					<?php endif; ?>

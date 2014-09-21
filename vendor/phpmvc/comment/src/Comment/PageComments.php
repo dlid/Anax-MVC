@@ -12,6 +12,24 @@ class PageComments implements \Anax\DI\IInjectionAware
 
     private $pageIdentifier = null; // The unique ID for the page
     private $includeParameters = []; // Array of querystring parameters to include when uniquely identifying a page
+    private $includeCss = true;
+
+    /**
+     * Disable load of external stylsheet 
+     */
+    function removeExternalCss() {
+        $this->includeCss = false;
+    }
+
+    /**
+     * Get the age of a timestamp in words
+     * @param  int  $timestamp [description]
+     * @return string The difference in words
+     */
+    function getTimeAgo($timestamp) {
+        $timeAgo = new \TimeAgo();
+        return $timeAgo->inWords(date('Y-m-d H:i', $timestamp));
+    }
 
     /**
      * Create a unique identifier for the current page

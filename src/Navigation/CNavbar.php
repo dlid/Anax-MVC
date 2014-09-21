@@ -42,6 +42,7 @@ class CNavbar
         {
           $html = null;
           $hasItemIsSelected = false;
+          $activeSubmenu = "";
 
           foreach ($items as $item) {
 
@@ -49,8 +50,11 @@ class CNavbar
             $submenu        = null;
             $selectedParent = null;
             if (isset($item['submenu'])) {
-              list($submenu, $selectedParent) = $createMenu($item['submenu']['items'], $callback);
+              list($submenu, $selectedParent, $subMenuHtml) = $createMenu($item['submenu']['items'], $callback);
               $selectedParent = $selectedParent ? " selected-parent" : null;
+              if($submenu && ($selectedParent || $callback($item['url']))) {
+                $activeSubmenu.=$submenu;
+              }
             }
 
             // Check if the current menuitem is selected
@@ -61,14 +65,20 @@ class CNavbar
 
             $selected = ($selected || $selectedParent) ? " class='${selected}{$selectedParent}' " : null;      
             $url = $createUrl($item['url']);
-            $html .= "\n<li{$selected}><a href='{$url}' title='{$item['title']}'>{$item['text']}</a>{$submenu}</li>\n";
+
+            $icon = null;
+            if(isset($item['icon'])) {
+              $icon = '<i class="icon fa fa-'.$item['icon'].'"></i>';
+            }
+
+            $html .= "\n<li{$selected}><a href='{$url}' title='{$item['title']}'>{$icon}<span class='label'>{$item['text']}</span></a>{$submenu}</li>\n";
           }
 
-          return array("\n<ul>$html</ul>\n", $hasItemIsSelected);
+          return array("\n<ul>$html</ul>\n", $hasItemIsSelected, $activeSubmenu);
         };
 
         // Call the anonomous function to create the menu, and submenues if any.
-        list($html, $ignore) = $createMenu($menu['items'], $menu['callback']);
+        list($html, $ignore, $submenu) = $createMenu($menu['items'], $menu['callback']);
 
 
         // Set the id & class element, only if it exists in the menu-array
@@ -76,6 +86,10 @@ class CNavbar
         $class   = isset($menu['class']) ? " class='{$menu['class']}'" : null;
         $wrapper = $menu['wrapper'];
 
-        return "\n<{$wrapper}{$id}{$class}>{$html}</{$wrapper}>\n";
+        if( $submenu ){
+          $submenu = "<{$wrapper}>{$submenu}</{$wrapper}>";
+        }
+
+        return "\n<{$wrapper}{$id}{$class}>{$html}{$submenu}</{$wrapper}>\n";
     }
 }

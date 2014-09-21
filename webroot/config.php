@@ -11,7 +11,7 @@
  */
 define('ANAX_INSTALL_PATH', realpath(__DIR__ . '/../') . '/');
 define('ANAX_APP_PATH',     ANAX_INSTALL_PATH . 'app/');
-
+define('STYLE_CONFIG', ANAX_INSTALL_PATH . 'app/config/style_config.php');
 
 
 /**

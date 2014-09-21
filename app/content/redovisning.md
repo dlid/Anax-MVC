@@ -1,6 +1,109 @@
 Redovisning
 ====================================
  
+Kmom03: Bygg ett eget tema
+------------------------------------
+
+> Vad tycker du om CSS-ramverk i allmänhet och vilka tidigare erfarenheter har du av dem?
+
+Jag har aldrig använt LESS eller SASS i något projekt tidigare, men jag har testat LESS
+med PHP förut men har inte gjort något mer avancerat. Jag har även sneglat på SASS men
+har inte använt det. Som jag förstått det så är den stora skillnaden mellan LESS och SASS
+att SASS kompileras på serversidan medan det för LESS finns möjligheten att göra det
+på klientsidan med JavaScript.
+
+Personligen tycker jag att man ändå borde hantera kompileringen på serversidan och 
+inte förlita sig blint på att JavaScript är aktiverat i webbläsaren. Men förutom
+att SASS inte riktigt har stöd för kompilering på klientsidan så har jag inte
+sett några större skillnader mellan de två.
+
+Anledningen till att jag började med LESS var att jag testade Bootstrap och då
+fanns bara en LESS-version tillgänglig. Nu finns däremot en SASS-version också.
+
+> Vad tycker du om LESS, lessphp och Semantic.gs?
+
+Även fast jag tidigare har använt LESS så känns det fortfarande lite magiskt. Jag tycker
+att det hierarkiska sättet att skriva på känns väldigt naturligt.
+
+LESS är vad CSS borde ha varit från början. Mixins är otroligt kraftfullt, 
+och det gör det så mycket enklare att dela med sig av och återanvända kod.
+
+Jag satt nyligen i ett .NET-projekt där vi började kika på att kompilera SASS-kod
+på sreversidan på ett liknande sätt som lessphp gör. På grund av olika omständigheter
+så var det väldigt svårt att få till, och vi fick istället kompilera det i ett
+script i och med deployen istället. Jämfört med det så är lessphp väldigt enkelt
+och lätt att använda.
+
+Jag använde mycket Bootstrap tidigare och tröttnade lite på att man fick för mycket
+layout. Jag ville endast ha grid-biten. Då hittade jag [Dead Simple Grid](http://mourner.github.io/dead-simple-grid/) som
+jag testade, och semantic.gs har ett liknande - väldigt grundläggande - upplägg.
+
+Med ramverk som bootstrap kan man ganska lätt få väldigt mycket grejer på köpet
+som man aldrig använder, om man bara är ute efter grid-systemet så tycker jag det
+är skönt att det finns alternativ som Semantic.gs och Dead Simple Grid.
+
+> Vad tycker du om gridbaserad layout, vertikalt och horisontellt?
+
+Det horisontella rutnätet är jag ju bekant med sedan tidigare, jag tror det är
+ett ganska vedertaget sätt att bygga sidor nu i.o.m. alla ramverk som hjälper
+till med det. Speciellt nu när allt byggs mer och mer responsivt så tror jag att
+det horisontella rutnätet har blivit en de facto standard - ungefär som tabeller
+var nyckeln till att designa sidor i begynnelsen.
+
+Vertikalt rutnät var däremot något jag aldrig ägnat en tanke åt tidigare. Det
+magiska numret och att 16px var den ideala storleken för typsnitt på webben
+hade jag heller inte hört talas om. Det var lite meck att få till så det blev rätt 
+med alla element som fanns i Lydia:s HTML för typografi, men jag tror att jag
+till slut fick det att stämma.	
+
+Detta var en ny aspekt av designtänkandet som jag tycker lade till en spännande
+aspekt.
+
+> Har du några kommentarer om Font Awesome, Bootstrap, Normalize?
+
+Font Awsome beskriver sig själv och det är jättesmidigt att ha tillgång till
+alla ikoner på ett så enkelt sätt. 
+
+Bootstrap nämnade jag här lite tidigare och jag har bara gott att säga om det. Man
+får mycket på köpet, men i vissa fall kanske det är mer än man vill ha. En bra grej
+är ju då att helt enkelt använda LESS och välja ut precis de delar man behöver.
+
+Normalize brukar jag använda, men jag har ingen stenkoll på skillnaderna som
+normaliseras mellan olika versioner av webbläsare. Jag kan tänka mig att skillnaderna
+är störst för äldre webbläsare, men det kanske även finns skillnader i nya versionerna.
+
+> Beskriv ditt tema, hur tänkte du när du gjorde det, gjorde du några utsvävningar?
+
+Jag ritade en liten logotyp som jag scannade in och fixade till med Inkscape. Jag
+ville ha ett ganska platt tema med mörk bakgrund, och bilden med polygonen samt
+den lilla polygonen i footern tycker jag lyfte upp designen.
+
+Med snygga bilder är det ju enklare att fixa en bra design och jag tog de flesta
+bilderna från [unsplash.com](https://unsplash.com/) förutom den på "me"-sidan
+som jag tagit själv.
+
+Responsivt så finns det tre brytpunkter.
+
+* När fönstret är minst 960px så låser jag bredden till 960
+* När fönstret är 768 eller mindre så visas varje kolumn på separata rader (förutom footer-kolumnerna)
+ * Bilden för Main banner justeras så att den ser lite bättre ut på mindre skärm
+* När man har större skärm än 1622 så visar jag ev. "flashes" till vänster om wrappern istället. Inte säker på att det är optimalt, men jag testade åtminstone. Om någon vill använda temat så är det ju lätt att fixa så att den visas som vanligt igen.
+
+Utsvävningarna blev väl just "flash"-delen. Har inte övertygat mig själv helt och hållet
+att det är bra att lägga ut flash-delarna till vänster om själva wrappern om skärmstorleken tillåter det. Men jag ville som sagt
+testa att utnyttja den större yta på något sätt eftersom jag låser bredden på min wrapper vid 960px.
+
+Jag fixade navigeringen så att den blir lite mer touchvänlig om man har en mindre
+skärm, och undermenyn fungerar också bra åtminstone till nivå ett.
+
+För övrigt så för Font Awsome och Semantic.gs med sig lite CSS som inte validerar,
+men det är jag medveten om.
+
+> Antog du utmaningen som extra uppgift?
+
+Jag valde att prioritera tiden till finjusteringar av layouten; den responsiva
+delen och inte minst det vertikala rutnätet som fångade mitt intresse. Så den
+här gången gjorde jag inte extrauppgiften.
 
 Kmom02: Kontroller och modeller
 ------------------------------------
@@ -57,6 +160,10 @@ DI, få undersöka vilka funktioner som finns för t.ex. session, request och re
 Även om jag förstod begreppen innan så var det nyttigt att lösa olika utmaningar med
 hjälp av ramverket för att få en bättre förståelse. 
 
+-----
+
+> Hittade du svagheter i koden som följde med phpmvc/comment? Kunde du förbättra något?
+
 Jag samlade lite funktionalitet i en ny klass som jag kallade [PageComments](source?path=vendor/phpmvc/comment/src/Comment/PageComments.php).
 När man lagt in den klassen och CommentController så är det lätt att lägga in all kommentarfunktionalitet
 med funktionen [addToPage](http://localhost:2014/phpmvc/kmom02/webroot/source?path=webroot/index.php#L48).
@@ -72,16 +179,13 @@ Jämfört med Icke-MVC-Anax så tycker jag redan att den här versionen känns b
 att jobba med. Strukturen känns tydligare i och med att man alltid har DI i grunden
 där man kommer åt allt man kan behöva.
 
------
-
-> Hittade du svagheter i koden som följde med phpmvc/comment? Kunde du förbättra något?
-
 Jag lade in lite validering så att man måste fylla i åtminstone kommentar och namn.
-
-
 
 Jag fixade även en liten bugg där [CSession::get](source?path=src/Session/CSession.php#L68)
 returnerade null istället för det defaultvärde man kan skicka in som parameter.
+
+Nästa logiska steg vore ju att spara kommentarerna i en databas, och med fördel
+att använda något spam-filter som t.ex. Akismet.
 
 Kmom01: PHP-baserade och MVC-inspirerade ramverk
 ------------------------------------

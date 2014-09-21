@@ -51,8 +51,6 @@ class CViewContainerBasic implements \Anax\DI\IInjectionAware
         return $this;
     }
 
-
-
     /**
      * Add a string as a view.
      *
