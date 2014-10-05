@@ -69,7 +69,7 @@ class CRouterBasic implements \Anax\DI\IInjectionAware
     {
         if (isset($this->internalRoutes[$rule])) {
             $route = $this->internalRoutes[$rule];
-            $route->handle();
+            $route->handle($this->di);
         } else {
             throw new \Anax\Exception\NotFoundException("No internal route to handle: " . $rule);
         }
@@ -92,7 +92,7 @@ class CRouterBasic implements \Anax\DI\IInjectionAware
             // Match predefined routes
             foreach ($this->routes as $route) {
                 if ($route->match($query)) {
-                    return $route->handle();
+                    return $route->handle($this->di);
                 }
             }
 

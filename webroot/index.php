@@ -6,10 +6,30 @@ $app->theme->configure(ANAX_APP_PATH . 'config/theme_void.php');
 $app->navbar->configure(ANAX_APP_PATH . 'config/navbar_me.php');
  
 $app->url->setUrlType(\Anax\Url\CUrl::URL_CLEAN);
+$app->session();
+
+$di->set('form', 'Mos\HTMLForm\CForm');
 
 // Include support for comments
-$di->set('CommentController', 'Phpmvc\Comment\CommentController');
-$di->setShared('comments', 'Phpmvc\Comment\PageComments');
+$di->setShared('comments', 'Anax\Comments\Comment');
+$di->setShared('pages', 'Anax\Comments\Page');
+
+// Include database support
+$di->setShared('db', function() {
+    $db = new \Mos\Database\CDatabaseBasic();
+    $db->setOptions(require ANAX_APP_PATH . 'config/database_sqlite.php');
+    $db->connect();
+    return $db;
+});
+
+$di->set('UsersController', '\Anax\Users\UsersController');
+
+$di->set('CommentController', function() use ($di) {
+    $controller = new \Anax\Comments\CommentController();
+    $controller->setDI($di);
+    return $controller;
+});
+
 
 
 $baseUrl = $di->request->getBaseUrl();
@@ -40,7 +60,7 @@ $app->router->add('', function() use ($app, $di) {
    $app->views->addString('ruben-gris.png', 'banner');
 
 	// Add comments section
-  $di->comments->addToPage($app);
+  $di->comments->addToView('main-footer');
 
 });
 
@@ -59,12 +79,8 @@ $app->router->add('report', function() use ($app, $di) {
 	]);
 
 	// Add comments section
-  $di->comments->addToPage($app);
-
-
+  $di->comments->addToView('main-footer');
   $app->views->addString('computer-work.png', 'banner');
-
-
 });
  
 $app->router->add('source', function() use ($app, $di) {
@@ -88,7 +104,7 @@ $app->router->add('source', function() use ($app, $di) {
         'content' => $source->View(),
     ]);
 
-  	$di->comments->addToPage($app);
+  	$di->comments->addToView('main-footer');
 
 });
 
@@ -103,6 +119,8 @@ $app->router->add('theme', function() use ($app, $di) {
 
   $app->views->addString('mainbanner-coffee.png', 'banner');
 
+  $di->comments->addToView('main-footer');
+
 });
 
 $app->router->add('theme/type', function() use ($app, $di) {
@@ -115,6 +133,8 @@ $app->router->add('theme/type', function() use ($app, $di) {
   $app->views->addString($content, 'sidebar');
 
   $app->theme->addStylesheet('css/void-base/show-grid.css');
+
+  $di->comments->addToView('main-footer');
 
 });
 
@@ -135,6 +155,111 @@ $app->router->add('theme/regions', function() use ($app, $di) {
   $app->views->addString('<h1>[Flash info]</h1><p>Här är "flash" som kan användas för viktig information</p>', 'flash-info');
   $app->views->addString('<h1>[Flash danger]</h1><p>Här är "flash" som kan användas när något gått riktigt snett</p>', 'flash-danger');
   $app->views->addString('<h1>[Flash success]</h1><p>Här är "flash" som kan användas när något gått bra</p>', 'flash-success');
+
+   $di->comments->addToView('main-footer');
+
+});
+
+$app->router->add('test', function() use ($app, $di) {
+  $app->theme->setTitle("Tester");
+  $app->views->addString("<h1>Tester</h1><p>Här tänker jag lägga upp tester</p><ul><li><a href='test/cform'>CForm</a></li></ul>", 'main');
+   $di->comments->addToView('main-footer');
+});
+
+
+$app->router->add('test/cform', function() use ($app, $di) {
+    $app->views->addString(  $di->navbar->getSubmenu(), 'sidebar' );
+    $app->theme->setTitle("CForm tests");
+    $app->views->add('default/page', [
+        'title' => "CForm Tests",
+        'content' => "<p>Välj test i menyn till höger</p>"
+    ]);
+});
+
+
+$di->set('FormTestController', '\App\FormTest\FormTestController');
+
+// Add routes for CForm test
+$app->router->add('test/cform/array', [ 'controller' => 'form-test', 'action' => 'array' ]);
+$app->router->add('test/cform/checkbox', [ 'controller' => 'form-test', 'action' => 'checkbox' ]);
+$app->router->add('test/cform/creditcard', [ 'controller' => 'form-test', 'action' => 'creditcard' ]);
+$app->router->add('test/cform/multicheckbox', [ 'controller' => 'form-test', 'action' => 'multicheckbox' ]);
+$app->router->add('test/cform/test1', [ 'controller' => 'form-test', 'action' => 'test1' ]);
+$app->router->add('test/cform/test2', [ 'controller' => 'form-test', 'action' => 'test2' ]);
+$app->router->add('test/cform/test3', [ 'controller' => 'form-test', 'action' => 'test3' ]);
+$app->router->add('test/cform/test4', [ 'controller' => 'form-test', 'action' => 'test4' ]);
+$app->router->add('test/cform/test5', [ 'controller' => 'form-test', 'action' => 'test5' ]);
+$app->router->add('test/cform/test6', [ 'controller' => 'form-test', 'action' => 'test6' ]);
+$app->router->add('test/cform/validation', [ 'controller' => 'form-test', 'action' => 'validation' ]);
+
+
+
+$app->router->add('setup', function() use ($app) {
+ 
+    $app->db->setVerbose();
+
+    $app->db->dropTableIfExists('comment')->execute();
+
+     $app->db->createTable(
+        'comment',
+        [
+            'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
+            'resource' => ['varchar(100)'],
+
+            // http://www.eph.co.uk/resources/email-address-length-faq/#emailmaxlength
+            'email' => ['varchar(254)'],
+            'content' => ['text'],
+            'name' => ['varchar(80)'],
+            'created' => ['datetime'],
+            'updated' => ['datetime'],
+            'deleted' => ['datetime']
+        ]
+    )->execute();
+
+
+    $app->db->dropTableIfExists('user')->execute();
+ 
+    $app->db->createTable(
+        'user',
+        [
+            'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
+            'acronym' => ['varchar(20)', 'unique', 'not null'],
+            'email' => ['varchar(80)'],
+            'name' => ['varchar(80)'],
+            'password' => ['varchar(255)'],
+            'created' => ['datetime'],
+            'updated' => ['datetime'],
+            'deleted' => ['datetime'],
+            'active' => ['datetime'],
+        ]
+    )->execute();
+
+   $app->db->insert(
+        'user',
+        ['acronym', 'email', 'name', 'password', 'created', 'active']
+    );
+ 
+    $now = date(DATE_RFC2822);
+ 
+    $app->db->execute([
+        'admin',
+        'admin@dbwebb.se',
+        'Administrator',
+        password_hash('admin', PASSWORD_DEFAULT),
+        $now,
+        $now
+    ]);
+ 
+    $app->db->execute([
+        'doe',
+        'doe@dbwebb.se',
+        'John/Jane Doe',
+        password_hash('doe', PASSWORD_DEFAULT),
+        $now,
+        $now
+    ]);
+
+    exit;
 
 });
 

@@ -190,4 +190,39 @@ class CUrl
         $this->urlType = $type;
         return $this;
     }
+
+    /**
+     * Parse and url, replace specified parts and return the new URL
+     * @param  [type] $urlString [description]
+     * @param  array  $options   [description]
+     * @return [type]            [description]
+     */
+    public function updateUrl($urlString, $options = array()) {
+
+        $newUrl = array();
+        $url = parse_url($urlString);
+        $url = array_merge($url, $options);
+
+        if(isset($url['scheme'])) {
+            $newUrl[]  = $url['scheme'] . '://';
+        }
+        if(isset($url['host'])) {
+            $newUrl[]  = $url['host'];
+        }
+        if(isset($url['port'])) {
+            $newUrl[]  = ":" . $url['port'];
+        }
+        if(isset($url['path'])) {
+            $newUrl[]  =  $url['path'];
+        }
+        if(isset($url['query'])) {
+            $newUrl[]  =  "?" . $url['query'];
+        }
+        if(isset($url['fragment'])) {
+            $newUrl[]  =  '#' . $url['fragment'];
+        }
+
+        return join('', $newUrl);
+    }
+
 }

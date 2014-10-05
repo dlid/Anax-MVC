@@ -31,7 +31,6 @@ spl_autoload_register(function ($class) {
  * @return void
  */
 spl_autoload_register(function ($className) {
-
     $path      = ANAX_SOURCE_PATH . DIRECTORY_SEPARATOR;
     $className = ltrim($className, '\\');
     $fileName  = $path;

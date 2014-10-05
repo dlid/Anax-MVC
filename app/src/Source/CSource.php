@@ -213,6 +213,10 @@ class CSource {
    */
   public function FilterPasswords() {
 
+    if( $this->file == 'CFormElement.php' ) {
+      return;
+    }
+
     $pattern = array(
       '/(\'|")(DB_PASSWORD|DB_USER)(.+)/',
       '/\$(password|passwd|pwd|pw|user|username)(\s*=\s*[\'|"])(.+)/i',
@@ -235,6 +239,7 @@ class CSource {
     }
     */
 
+  
     $this->content = preg_replace($pattern, $replace, $this->content);
   }
 

@@ -116,17 +116,16 @@
 
   .navbar {
 
-   
     > nav {
       display:none;
     }
 
-     .label {
+    .label {
       text-align: left
-     }
+    }
 
     ul {
-       text-align: left ! important;
+      text-align: left ! important;
       font-size: 1em;
       text-transform: uppercase;
     }
@@ -136,10 +135,10 @@
     }
 
 
-  li:hover ul {
-    left: 0;
-  }
-   
+    li:hover ul {
+      left: 0;
+    }
+
 
     .icon {display: none;}
 
@@ -167,3 +166,40 @@
 
 }
 
+#sidebar nav ul {
+  background-color: rgb(45, 49, 55);
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: @fontSizeSmall;
+}
+
+#sidebar nav ul a {
+  background: transparent;
+  color: rgb(232, 245, 255);
+  font-size: .9em;
+  text-decoration: none;
+  padding: 6px 0 6px 8px;
+  display: block;
+  border-left: 6px solid transparent;
+}
+
+#sidebar nav ul li:hover {
+  background-color:#393f45;
+}
+
+#sidebar nav li.selected a {
+  border-color: #479ce4;
+  background-color:#393f45;
+}
+
+#sidebar .submenu-header {
+  color:#fff; padding:4px 0 4px 8px; border-left: 6px solid transparent; text-decoration: none; font-weight:bold; display:block; font-size: .9em;  
+  background-color:darken(#737a82, 10%);
+
+  &.selected {
+    border-color:#479ce4;
+    background-color:#737a82;
+  }
+
+}

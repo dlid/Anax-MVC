@@ -29,7 +29,7 @@
 	</div>
 	<?php endif; ?>
 
-	<?php if ($this->views->hasContent('flash-info', 'flash-success', 'flash-warning', 'flash-danger')) : ?>
+	<?php if ($this->views->hasContent('flash-info') || $this->views->hasContent('flash-success') || $this->views->hasContent('flash-warning') || $this->views->hasContent('flash-danger')) : ?>
 		<div id="flash">
 			<?php if ($this->views->hasContent('flash-info')) : ?>
 			<div class="row content-flash flash-info">

@@ -59,8 +59,13 @@ class CRouteBasic
      *
      * @return void
      */
-    public function handle() 
+    public function handle($di) 
     {
+        if( is_array($this->action) ) {
+            $di->dispatcher->forward($this->action);
+            return;
+        }
+
         return call_user_func($this->action);
     }
 

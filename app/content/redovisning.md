@@ -1,6 +1,127 @@
 Redovisning
 ====================================
- 
+
+Kmom04: Databasdrivna modeller
+------------------------------------
+
+Det här var ett tidskrävande kursmoment för mig, men jag tror att jag fick lära
+mig mycket på vägen. Jag har svårt att sätta fingret på varför det tog sådan
+tid, men det har att göra med att komma in i MVC-tänket på ett sätt som gör att
+jag både följer mönstret och är nöjd själv tror jag. "User"-sidan
+till exempel började jag om med både en och två gånger, och än idag är jag inte
+säker på att jag är helt nöjd. Jag tycker t.ex. kontrollern innehåller för mycket
+redundant data - t.ex. callbackfunktionen för formuläret när valideringen inte
+lyckas, och alla formulär borde kunna göras snyggare också än att definiera dem
+i varje action. Kanske bryta ut dem till separata klasser istället, då blir 
+koden lite snyggare åtminstone.
+
+> Vad tycker du om formulärhantering som visas i kursmomentet?
+
+Ett smart sätt att enkelt skapa formulär och alltid ha tillgång till de typer
+av validering man kan använda. Det är ju även lätt att utöka CForm så att man
+kan ha flera typer av validering om man så önskar. Jag gillar "extend"-tänket
+med alla konfigurationerna som syns överallt, där alla inställningar hanteras
+som arrayer som har defaultvärden som lätt kan ersättas. Alla tester lade jag
+in under [test/Cform](test/cform).
+
+För att felmeddelandena skulle visas på "mitt" sätt så utökade jag CForm med en
+callback funktion för "[output-write](source?path=src/HTMLForm/CForm.php#L58)". Om man definierar en callbackfunkton så
+[anropas den istället](source?path=src/HTMLForm/CForm.php#L197) för att outputen skrivs i HTML:en för formuläret.
+
+Jag lade även in så attributen [novalidate](http://www.w3.org/TR/2012/WD-html5-20121025/form-submission.html#attr-fs-novalidate)
+går att sätta på formuläret. Det var lättare att testa valideringen av formuläret
+när inte webbläsarens validering kom i vägen. I många fall vill man förmodligen
+inte stänga av valideringen i webbläsaren, men när man testar så var det rätt skönt. 
+
+Valideringen för checkbox gillade jag inte riktigt. Om man inte kryssade i kryssrutan
+så fick man ett felmeddelande, men checkboxen kryssades också i automatiskt. Jag fixade
+det genom att [rensa värdet](source?path=src/HTMLForm/CForm.php#L438) om det finns valideringsfel på checkboxen. 
+
+> Vad tycker du om databashanteringen som visas, föredrar du kanske traditionell SQL?
+
+Jag fick uppgradera min utvecklingsmiljö från PHP 5.3 till 5.5 för att få tillgång
+till funktionen [password_hash](http://docs.php.net/manual/en/function.password-hash.php) så
+det tog lite tid att fixa, men det gick åtminstone bra. Jag hade kvar version 5.3 eftersom
+mitt webbhotell har 5.3, men jag tycker väl att de borde uppgradera snart också!
+
+Sedan jag började använda Entity Framework och Linq i .NET så har jag velat ha 
+något liknande för PHP i mina egna små projekt. Jag har sneglat på [propel](http://propelorm.org/)
+men har inte haft tid att titta närmare på det. För egen del har jag mest gjort
+mindre lösningar med enklare klasser som helt enkelt kör en SQL-fråga och
+binder parametrar.
+
+Den stora fördelen är ju att det är lättare att skriva frågorna, men nackdelen
+är ju att man kanske inte riktigt har koll på den SQL som genereras. Man får 
+lita på att ramverket skapar den bästa SQL-koden för frågan, och om man blint litar
+på det så kanske man hamnar i situationer där man inte förstår varför något
+går lite segt. Ofta är ju ramverken väldigt optimierade och bra, men det kan vara
+bra att försöka titta på den kod som genereras också så att man får förståelse
+för vad som händer.
+
+> Gjorde du några vägval, eller extra saker, när du utvecklade basklassen för modeller?
+
+Jag valde att lägga allt i CDatabaseModel-klassen så kommer den att vara användbar för alla
+databasmodeller man kan komma att vilja ha. Det bygger ju på att alla tabeller man
+skapar har ett id som primärnyckel, men det brukar man ju normalt ha så det tror jag
+knappas är någon nackdel. Det är också lätt att överlagra t.ex. getSource i en klass om
+om man vill ha ett helt annat namn på tabellen.
+
+> Beskriv vilka vägval du gjorde och hur du valde att implementera kommentarer i databasen.
+
+Jag stångades ju ett tag med att få till [users-biten](users) och om man jämför så är jag
+mycket, mycket mer nöjd med hur strukturen och koden blev för den uppdaterade
+kommenteringsfunktionen. När kommentarsfunktionen var klar så fick jag åter lite
+hopp om att jag inte är hopplöst vilse i MVC-strukturen.
+
+Jag valde att implementera kommentarerna på samma sätt som Users. Jag lade märke till att
+det inte blev rätt datum i databasen med DATE_RFC2822 så jag ändrade det till
+'Y-m-d H:i:s' och då blev det rätt.
+
+Jag skapade två tabeller - en för själva sidorna som man kommenterar och en för kommentarerna.
+Tidigare använde jag en hashad sträng för att identifiera de unika sidorna, men
+om man listar alla kommentarer så vill man kanske se vilken sida kommentaren gäller. Så då
+ville jag inte spara URL:en för varje kommentar utan skapade istället en ny tabell för det.
+
+Alla kommentarer kan tas bort via [comment/setup](comment/setup).
+
+Kommentarerna kan listas via [comment/all](comment/all).
+
+För att bibehålla utseendet på min kommentarfunktion så utökade jag CFormElement så att 
+man kan [skicka in en renderingsfunktion](source?path=src/Comments/CFormComment.php#L14).
+Renderingsfunktionen [anropas](source?path=src/HTMLForm/CFormElement.php#L318) i och med elementets
+GetHTML() och skickar med allt man kan behöva för att själv rendera ut elementet 
+i godtyckligt format.
+
+Formuläret ligger som en [egen klass](source?path=src/Comments/CFormComment.php#L1)
+och det kändes som att allt blev mycket snyggare när man delade upp det på det viset.
+För att lägga in kommentarfunktionalitet i en region så kan man använda funktionen
+[addToView](source?path=src/Comments/Comment.php#L117) som sköter detta åt dig.
+
+I kontrollern finns action för [add](source?path=src%2FComments%2FCommentController.php#L121),
+[remove](source?path=src%2FComments%2FCommentController.php#L166), 
+[edit](source?path=src%2FComments%2FCommentController.php#L57) samt [view](source?path=src%2FComments%2FCommentController.php#L40)
+för att visa kommentarer för en viss sida och [all](source?path=src%2FComments%2FCommentController.php#L20)
+för att lista alla kommentarer som finns i databasen.
+
+Jag har inte implementerat någon kontroll så att man endast kan redigera och
+ta bort ens egna kommentarer under aktuell session, men det vore såklart ett logiskt
+nästa steg, eller om man kopplar ihop det med en inloggad användare.
+
+Det har varit en ordentlig resa under detta kursmoment och jag tror det syns i koden. Koden
+för Users (mer specifikt [UsersController](source?path=src/Users/UsersController.php))
+blev väldigt stor och känns lite rörig med alla formulär i nästan varenda action. Men jag
+hoppas som sagt skillnadens syns i och med implementeringenn av kommentarerna där
+jag tycker jag lyckades strukturera upp det betydligt bättre. Om jag återanvänder koden
+för användare inför projektet så vet jag ju åtminstone hur jag kommer snygga till det!
+
+Databasen ligger lite oskyddat i webroot nu och den ska ju helst läggas så att
+ingen kommer åt den via en webbläsare. Men nu är det iaf lätt att [ladda hem](dali14.sqlite)
+och kika på om man vill.
+
+> Gjorde du extrauppgiften? Beskriv i så fall hur du tänkte och vilket resultat du fick.
+
+Hade för avsikt att göra det men hann inte eftersom uppgiften drog ut på tiden.
+
 Kmom03: Bygg ett eget tema
 ------------------------------------
 

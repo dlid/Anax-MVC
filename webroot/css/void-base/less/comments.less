@@ -6,14 +6,16 @@
 	font-size: 1em;
 }
 
-.comment-form {
-
-	border-top: 1px solid #aaa;
+.commented-page {
+	margin: 2px 0 0 10px; padding:0;
+	font-size: .8em;
+	color: #888;
 }
 
 .comment-form .instructions {
 	font-size: .8em;
 	color: #777;
+	margin-top: 0;
 }
 
 .comment, .comment-body {
@@ -65,12 +67,22 @@
 	margin: 0;
 }
 
+.comment-form .validation-message {
+	margin: 0 0 0 68px ! important;
+	padding: 0! important;
+	list-style-type: none;
+
+}
+
+.comment-form p {
+	margin-bottom: 0;
+}
+
 .comment-form  label {
-	min-width: 100px;
+	min-width: 60px;
 	display: inline-block;
-	vertical-align: top;
-	margin-top: 8px;
-	font-size: .9em;
+	vertical-align: middle;
+	font-size: .85em;
 }
 
 
@@ -85,11 +97,11 @@
 
 .comment-form textarea {
 	width: 60%;
-	height: 40px;
+	height: 60px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	border: 2px solid #999;
+	border: 1px solid #999;
 	padding: 8px;
 	font-size: 0.8em;
 	font-family: arial,sans-serif;
@@ -105,3 +117,9 @@ p.textarea img {
 	height: 60px;
 }
 
+
+
+input.validation-failed,
+textarea.validation-failed {
+	border-color: red ! important;
+}

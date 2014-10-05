@@ -1,7 +1,4 @@
 
-
-
-
 $(function() {
 
   var jqCommentForm = $('.comment-form');
@@ -14,7 +11,7 @@ $(function() {
     .on('focus', 'textarea, input', Comments.commentFieldFocusEvent)
     .on('blur', 'textarea, input', Comments.commentFieldBlurEvent);
 
-  if( jqCommentForm.find('textarea').val() == '') {
+  if( jqCommentForm.find('textarea').val() == '' && jqCommentForm.find('.validation-message').length == 0) {
     jqCommentForm.find('.commentator-details').hide();
   } else {
     jqCommentForm.addClass('never-hide');
@@ -35,7 +32,7 @@ var Comments = {
 
   gravatarBlurEvent : function() {
     var gravatarHash = md5($(this).val()),
-        jqImg = $($(this).attr('data-gravatar-target'));
+        jqImg = $('#CommentGravatarImage');
       if( jqImg ) {
         jqImg.attr('src', 'http://www.gravatar.com/avatar/' + gravatarHash + '.jpg?s=60')
       }
@@ -43,19 +40,24 @@ var Comments = {
 
   commentFieldFocusEvent : function() {
 
+    var jqTextarea = $(this).closest('.comment-form').find('textarea').first();
     if(window._hideTimer) {
       clearInterval(window._hideTimer);
       window._hideTimer = null;
     }
 
-    $(this).closest('.comment-form').find('.commentator-details').show('fast', function() {
-      ensureFormVisibility($(this).closest('.comment-form').find('.commentator-details'));
-    });
+    if( !jqTextarea.closest('.comment-form').find('.commentator-details').is(':visible') ) {
+      $(this).closest('.comment-form').find('.commentator-details').show('fast', function() {
+        ensureFormVisibility($(this).closest('.comment-form').find('.commentator-details'));
+      });
+    }
   },
 
   commentFieldBlurEvent : function() {
     
     var jqTextarea = $(this).closest('.comment-form').find('textarea').first();
+
+
 
     if(window._hideTimer) {
       clearInterval(window._hideTimer);

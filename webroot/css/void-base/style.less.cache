@@ -1,4 +1,4 @@
-a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:38757:"html {
+a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:41248:"html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -1886,11 +1886,14 @@ html {
 #header:after {
   clear: both;
 }
+.src-container {
+  font-size: 12px;
+}
 h1 {
   font-size: 2.375em;
   font-weight: 300;
   line-height: 1.1579;
-  margin: 0;
+  margin: 22px 0;
   padding: 0;
 }
 h2 {
@@ -2279,6 +2282,109 @@ table tbody tr:nth-child(odd) {
     background-image: url(../../img/arrow-orange-down.png);
   }
 }
+#sidebar nav ul {
+  background-color: #2d3137;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.875em;
+}
+#sidebar nav ul a {
+  background: transparent;
+  color: #e8f5ff;
+  font-size: .9em;
+  text-decoration: none;
+  padding: 6px 0 6px 8px;
+  display: block;
+  border-left: 6px solid transparent;
+}
+#sidebar nav ul li:hover {
+  background-color: #393f45;
+}
+#sidebar nav li.selected a {
+  border-color: #479ce4;
+  background-color: #393f45;
+}
+#sidebar .submenu-header {
+  color: #fff;
+  padding: 4px 0 4px 8px;
+  border-left: 6px solid transparent;
+  text-decoration: none;
+  font-weight: bold;
+  display: block;
+  font-size: .9em;
+  background-color: #5b6167;
+}
+#sidebar .submenu-header.selected {
+  border-color: #479ce4;
+  background-color: #737a82;
+}
+form fieldset {
+  display: block;
+  position: relative;
+  top: 0;
+  left: 0;
+  padding: 0em .5em .5em 24px;
+  margin: 0 0 1em 0;
+  background: #ddd;
+  border: none;
+  background-image: url(../../img/fieldset-rectangle.png);
+  background-repeat: no-repeat;
+  background-position: -10px -80px;
+}
+form fieldset legend,
+form fieldset legend span {
+  display: block;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+}
+form fieldset legend {
+  padding: 0;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+form fieldset legend span {
+  padding: .1em 0;
+  color: #000000;
+  background: #DDEEFF;
+  text-indent: .5em;
+}
+fieldset p {
+  margin: 11px 0;
+}
+form label {
+  line-height: 2em;
+  font-size: 0.875em;
+}
+form input[type=text],
+form input[type=email],
+form input[type=number] {
+  font-size: 0.875em;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+form input.validation-failed {
+  border-color: red;
+}
+form ul.validation-message {
+  margin: 0 0 0 0px;
+  font-size: 0.875em;
+  color: red;
+}
+@-moz-document url-prefix() {
+  form fieldset legend span {
+    top: -2em;
+    left: -0.5em;
+  }
+}
 figure {
   margin: 0;
   margin-bottom: 22px;
@@ -2337,12 +2443,16 @@ figure.rounded img {
 .comment-form h2 {
   font-size: 1em;
 }
-.comment-form {
-  border-top: 1px solid #aaa;
+.commented-page {
+  margin: 2px 0 0 10px;
+  padding: 0;
+  font-size: .8em;
+  color: #888;
 }
 .comment-form .instructions {
   font-size: .8em;
   color: #777;
+  margin-top: 0;
 }
 .comment,
 .comment-body {
@@ -2383,12 +2493,19 @@ figure.rounded img {
 .comment-form p.textarea {
   margin: 0;
 }
+.comment-form .validation-message {
+  margin: 0 0 0 68px ! important;
+  padding: 0 ! important;
+  list-style-type: none;
+}
+.comment-form p {
+  margin-bottom: 0;
+}
 .comment-form  label {
-  min-width: 100px;
+  min-width: 60px;
   display: inline-block;
-  vertical-align: top;
-  margin-top: 8px;
-  font-size: .9em;
+  vertical-align: middle;
+  font-size: .85em;
 }
 .comment-form input[type=text] {
   padding: 6px;
@@ -2400,11 +2517,11 @@ figure.rounded img {
 }
 .comment-form textarea {
   width: 60%;
-  height: 40px;
+  height: 60px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  border: 2px solid #999;
+  border: 1px solid #999;
   padding: 8px;
   font-size: 0.8em;
   font-family: arial, sans-serif;
@@ -2415,6 +2532,10 @@ p.textarea img {
 .gravatar-large {
   width: 60px;
   height: 60px;
+}
+input.validation-failed,
+textarea.validation-failed {
+  border-color: red ! important;
 }
 .byline {
   padding-left: 0.5em;
@@ -2460,4 +2581,4 @@ hr:before {
 hr:after {
   background: #f4f4f4;
 }
-";s:5:"files";a:23:{s:73:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\style.less";i:1411320973;s:82:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\less\normalize.less";i:1411063657;s:77:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\less\grid.less";i:1411065262;s:104:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\font-awesome-4.2.0\less\font-awesome.less";i:1411073527;s:101:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\font-awesome-4.2.0\less\variables.less";i:1411073527;s:98:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\font-awesome-4.2.0\less\mixins.less";i:1411073527;s:96:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\font-awesome-4.2.0\less\path.less";i:1411073527;s:96:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\font-awesome-4.2.0\less\core.less";i:1411073527;s:98:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\font-awesome-4.2.0\less\larger.less";i:1411073527;s:103:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\font-awesome-4.2.0\less\fixed-width.less";i:1411073527;s:96:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\font-awesome-4.2.0\less\list.less";i:1411073527;s:107:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\font-awesome-4.2.0\less\bordered-pulled.less";i:1411073527;s:100:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\font-awesome-4.2.0\less\spinning.less";i:1411073527;s:107:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\font-awesome-4.2.0\less\rotated-flipped.less";i:1411073527;s:99:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\font-awesome-4.2.0\less\stacked.less";i:1411073527;s:97:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\font-awesome-4.2.0\less\icons.less";i:1411073527;s:82:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\less\variables.less";i:1411236713;s:82:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\less\structure.less";i:1411321154;s:83:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\less\responsive.less";i:1411321237;s:79:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\less\navbar.less";i:1411315663;s:79:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\less\figure.less";i:1403039119;s:81:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\less\comments.less";i:1411320962;s:81:"C:\Dropbox\BTH\public_html\phpmvc\kmom03\webroot\css\void-base\less\elements.less";i:1411320979;}s:7:"updated";i:1411321238;}
+";s:5:"files";a:24:{s:73:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\style.less";i:1411811968;s:82:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\less\normalize.less";i:1411063657;s:77:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\less\grid.less";i:1411065262;s:104:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\font-awesome-4.2.0\less\font-awesome.less";i:1411073527;s:101:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\font-awesome-4.2.0\less\variables.less";i:1411073527;s:98:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\font-awesome-4.2.0\less\mixins.less";i:1411073527;s:96:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\font-awesome-4.2.0\less\path.less";i:1411073527;s:96:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\font-awesome-4.2.0\less\core.less";i:1411073527;s:98:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\font-awesome-4.2.0\less\larger.less";i:1411073527;s:103:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\font-awesome-4.2.0\less\fixed-width.less";i:1411073527;s:96:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\font-awesome-4.2.0\less\list.less";i:1411073527;s:107:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\font-awesome-4.2.0\less\bordered-pulled.less";i:1411073527;s:100:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\font-awesome-4.2.0\less\spinning.less";i:1411073527;s:107:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\font-awesome-4.2.0\less\rotated-flipped.less";i:1411073527;s:99:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\font-awesome-4.2.0\less\stacked.less";i:1411073527;s:97:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\font-awesome-4.2.0\less\icons.less";i:1411073527;s:82:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\less\variables.less";i:1411236713;s:82:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\less\structure.less";i:1412513804;s:83:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\less\responsive.less";i:1411321237;s:79:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\less\navbar.less";i:1411819921;s:77:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\less\form.less";i:1411823400;s:79:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\less\figure.less";i:1403039119;s:81:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\less\comments.less";i:1412513111;s:81:"C:\Dropbox\BTH\public_html\phpmvc\kmom04\webroot\css\void-base\less\elements.less";i:1411320979;}s:7:"updated";i:1412513806;}
